@@ -20,6 +20,6 @@ logging.basicConfig(
 # Also log to console
 console = logging.StreamHandler()
 console.setLevel(logging.INFO)
-formatter = logging.Formatter('[%(asctime)s] %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter("[%(asctime)s] %(name)s - %(levelname)s - %(message)s")
 console.setFormatter(formatter)
-logging.getLogger('').addHandler(console)
+logging.getLogger("").addHandler(console)

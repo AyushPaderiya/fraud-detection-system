@@ -25,6 +25,7 @@ from src.utils import load_object, calculate_business_metrics
 @dataclass
 class ModelEvaluationConfig:
     """Configuration for model evaluation artifacts."""
+
     evaluation_report_path: str = os.path.join("artifacts", "evaluation_report.json")
     confusion_matrix_path: str = os.path.join("artifacts", "confusion_matrix.png")
     roc_curve_path: str = os.path.join("artifacts", "roc_curve.png")
@@ -284,10 +285,14 @@ class ModelEvaluation:
             results_py = _to_python(results)
 
             # Save JSON
-            os.makedirs(os.path.dirname(self.evaluation_config.evaluation_report_path), exist_ok=True)
+            os.makedirs(
+                os.path.dirname(self.evaluation_config.evaluation_report_path), exist_ok=True
+            )
             with open(self.evaluation_config.evaluation_report_path, "w", encoding="utf-8") as f:
                 json.dump(results_py, f, indent=4)
-            logging.info(f"Evaluation report saved to: {self.evaluation_config.evaluation_report_path}")
+            logging.info(
+                f"Evaluation report saved to: {self.evaluation_config.evaluation_report_path}"
+            )
 
             logging.info("Model evaluation completed successfully")
             return results_py

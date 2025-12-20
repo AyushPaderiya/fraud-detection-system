@@ -10,12 +10,12 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/predict", methods=["GET", 'POST'])
+@app.route("/predict", methods=["GET", "POST"])
 def predict():
     """Single-transaction prediction page."""
     if request.method == "GET":
         return render_template("predict.html")
-    
+
     # POST: form submission
     try:
         # Read form fields
@@ -29,7 +29,7 @@ def predict():
         oldbalanceDest = float(request.form.get("oldbalanceDest", 0.0))
         newbalanceDest = float(request.form.get("newbalanceDest", 0.0))
         isFlaggedFraud = int(request.form.get("isFlaggedFraud", 0))
-        
+
         # Wrap into CustomData
         data = CustomData(
             step=step,
@@ -43,26 +43,18 @@ def predict():
             newbalanceDest=newbalanceDest,
             isFlaggedFraud=isFlaggedFraud,
         )
-        
+
         df = data.to_dataframe()
         pipeline = PredictPipeline()
         pred = int(pipeline.predict(df)[0])
-        
+
         result_text = "FRAUD" if pred == 1 else "LEGITIMATE"
-        
-        return render_template(
-            "predict.html",
-            prediction=result_text,
-            form_data=request.form
-        )
-    
+
+        return render_template("predict.html", prediction=result_text, form_data=request.form)
+
     except Exception as e:
         # Simple error display; logging already handled in backend
-        return render_template(
-            "predict.html",
-            error=str(e),
-            form_data=request.form
-        )
+        return render_template("predict.html", error=str(e), form_data=request.form)
 
 
 if __name__ == "__main__":

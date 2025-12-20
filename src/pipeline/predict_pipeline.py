@@ -13,6 +13,7 @@ from src.utils import load_object
 @dataclass
 class PredictPipelineConfig:
     """Paths to model and preprocessor artifacts."""
+
     model_path: str = os.path.join("artifacts", "model.pkl")
     preprocessor_path: str = os.path.join("artifacts", "preprocessor.pkl")
 
@@ -22,49 +23,50 @@ class PredictPipeline:
     Handles loading artifacts and making predictions.
     Used by Flask app and any batch prediction scripts.
     """
-    
+
     def __init__(self):
         self.config = PredictPipelineConfig()
-    
+
     def predict(self, features: pd.DataFrame):
         """
         Predict fraud for given input features.
-        
+
         Args:
             features (pd.DataFrame): Raw input features (same schema as training)
-            
+
         Returns:
             np.ndarray: Predicted labels (0/1)
         """
         try:
             logging.info("Starting prediction pipeline")
-            
+
             # Load artifacts
             logging.info(f"Loading model from: {self.config.model_path}")
             model = load_object(self.config.model_path)
-            
+
             logging.info(f"Loading preprocessor from: {self.config.preprocessor_path}")
             preprocessor = load_object(self.config.preprocessor_path)
-            
+
             # Apply same feature engineering as training
             from src.components.data_transformation import FeatureEngineer
+
             feature_engineer = FeatureEngineer()
-            
+
             logging.info("Applying feature engineering to input data")
             data_fe = feature_engineer.transform(features)
-            
+
             # Separate features (drop target if present)
-            if 'isFraud' in data_fe.columns:
-                data_fe = data_fe.drop(columns=['isFraud'])
-            
+            if "isFraud" in data_fe.columns:
+                data_fe = data_fe.drop(columns=["isFraud"])
+
             logging.info("Applying preprocessing pipeline")
             data_transformed = preprocessor.transform(data_fe)
-            
+
             logging.info("Making predictions")
             preds = model.predict(data_transformed)
-            
+
             return preds
-        
+
         except Exception as e:
             raise CustomException(e, sys)
 
@@ -74,7 +76,7 @@ class CustomData:
     Container for a single transaction's raw inputs.
     Converts them into a DataFrame compatible with the pipeline.
     """
-    
+
     def __init__(
         self,
         step: int,
@@ -98,11 +100,11 @@ class CustomData:
         self.oldbalanceDest = oldbalanceDest
         self.newbalanceDest = newbalanceDest
         self.isFlaggedFraud = isFlaggedFraud
-    
+
     def to_dataframe(self) -> pd.DataFrame:
         """
         Convert the transaction into a single-row DataFrame.
-        
+
         Returns:
             pd.DataFrame: One-row DataFrame with correct column names
         """
@@ -119,10 +121,10 @@ class CustomData:
                 "newbalanceDest": [self.newbalanceDest],
                 "isFlaggedFraud": [self.isFlaggedFraud],
             }
-            
+
             df = pd.DataFrame(data_dict)
             return df
-        
+
         except Exception as e:
             raise CustomException(e, sys)
 
@@ -142,12 +144,12 @@ if __name__ == "__main__":
             newbalanceDest=50000.0,
             isFlaggedFraud=0,
         )
-        
+
         sample_df = sample.to_dataframe()
-        
+
         pipeline = PredictPipeline()
         pred = pipeline.predict(sample_df)
-        
+
         print("\nSample prediction:", int(pred[0]))
         print("1 = Fraud, 0 = Legitimate\n")
     except Exception as e:
