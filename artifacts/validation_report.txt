@@ -1,0 +1,116 @@
+
+======================================================================
+VALIDATION REPORT: Training Set
+======================================================================
+
+1. Column Validation:
+   ✅ All expected columns present
+
+2. Data Type Validation:
+   ✅ All data types correct
+
+3. Missing Values:
+   ✅ No missing values
+
+4. Duplicate Records:
+   ✅ No duplicates
+
+5. Target Variable (isFraud):
+   Fraud cases: 5749 (0.1291%)
+   Legitimate cases: 4448085 (99.8709%)
+   ✅ Fraud rate within expected range
+
+6. Transaction Types:
+   - CASH_OUT: 1565926 (35.16%)
+   - PAYMENT: 1506155 (33.82%)
+   - CASH_IN: 979750 (22.00%)
+   - TRANSFER: 373044 (8.38%)
+   - DEBIT: 28959 (0.65%)
+
+7. Amount Statistics:
+   Min: $0.00
+   Max: $92445516.64
+   Mean: $179939.73
+   Median: $74822.81
+
+======================================================================
+Overall Status: ✅ PASSED
+======================================================================
+
+
+======================================================================
+VALIDATION REPORT: Validation Set
+======================================================================
+
+1. Column Validation:
+   ✅ All expected columns present
+
+2. Data Type Validation:
+   ✅ All data types correct
+
+3. Missing Values:
+   ✅ No missing values
+
+4. Duplicate Records:
+   ✅ No duplicates
+
+5. Target Variable (isFraud):
+   Fraud cases: 1232 (0.1291%)
+   Legitimate cases: 953161 (99.8709%)
+   ✅ Fraud rate within expected range
+
+6. Transaction Types:
+   - CASH_OUT: 335630 (35.17%)
+   - PAYMENT: 322072 (33.75%)
+   - CASH_IN: 209895 (21.99%)
+   - TRANSFER: 80504 (8.44%)
+   - DEBIT: 6292 (0.66%)
+
+7. Amount Statistics:
+   Min: $0.00
+   Max: $67500761.29
+   Mean: $179950.31
+   Median: $75103.14
+
+======================================================================
+Overall Status: ✅ PASSED
+======================================================================
+
+
+======================================================================
+VALIDATION REPORT: Test Set
+======================================================================
+
+1. Column Validation:
+   ✅ All expected columns present
+
+2. Data Type Validation:
+   ✅ All data types correct
+
+3. Missing Values:
+   ✅ No missing values
+
+4. Duplicate Records:
+   ✅ No duplicates
+
+5. Target Variable (isFraud):
+   Fraud cases: 1232 (0.1291%)
+   Legitimate cases: 953161 (99.8709%)
+   ✅ Fraud rate within expected range
+
+6. Transaction Types:
+   - CASH_OUT: 335944 (35.20%)
+   - PAYMENT: 323268 (33.87%)
+   - CASH_IN: 209639 (21.97%)
+   - TRANSFER: 79361 (8.32%)
+   - DEBIT: 6181 (0.65%)
+
+7. Amount Statistics:
+   Min: $0.00
+   Max: $73823490.36
+   Mean: $179410.31
+   Median: $74864.36
+
+======================================================================
+Overall Status: ✅ PASSED
+======================================================================
