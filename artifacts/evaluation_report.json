@@ -1,0 +1,30 @@
+{
+    "model_name": "Model",
+    "optimal_threshold": 0.8394881949524197,
+    "metrics": {
+        "roc_auc": 0.99852005887873,
+        "pr_auc": 0.9971645414432041,
+        "precision": 1.0,
+        "recall": 0.9959415584415584,
+        "f1_score": 0.9979666531110206,
+        "specificity": 1.0,
+        "precision_at_90_recall": 1.0
+    },
+    "confusion_matrix": {
+        "true_negatives": 953161,
+        "false_positives": 0,
+        "false_negatives": 5,
+        "true_positives": 1227
+    },
+    "business_impact": {
+        "fraud_prevented": 6135000,
+        "fraud_lost": 25000,
+        "investigation_costs": 61350,
+        "net_savings": 6073650,
+        "roi": 98.59821428571428,
+        "tp": 1227,
+        "fp": 0,
+        "fn": 5,
+        "tn": 953161
+    }
+}

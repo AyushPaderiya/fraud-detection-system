@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Fraud Detection System | Overview</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <style>
+        :root {
+            --bg: #050816;
+            --bg-elevated: #0b1020;
+            --accent: #3b82f6;
+            --accent-soft: rgba(59, 130, 246, 0.15);
+            --accent-danger: #f97373;
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+            --border-subtle: #1f2933;
+            --card-radius: 16px;
+            --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.65);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top, #1e293b 0, #020617 50%, #000 100%);
+            color: var(--text-main);
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+        }
+
+        .page {
+            width: 100%;
+            max-width: 1200px;
+            padding: 32px 20px 40px;
+            margin: auto;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: radial-gradient(circle at 30% 20%, #4ade80, #22c55e 35%, #16a34a 55%, #14532d 100%);
+            box-shadow: 0 0 18px rgba(34, 197, 94, 0.65);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 18px;
+            color: #022c22;
+        }
+
+        .brand-title {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .brand-title h1 {
+            font-size: 20px;
+            margin: 0;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+        }
+
+        .brand-title span {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .header-cta {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .pill {
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(148, 163, 184, 0.08);
+            color: var(--text-muted);
+            font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .pill-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #22c55e;
+            box-shadow: 0 0 12px rgba(34, 197, 94, 0.9);
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+            gap: 24px;
+        }
+
+        @media (max-width: 900px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: rgba(15, 23, 42, 0.92);
+            border-radius: var(--card-radius);
+            border: 1px solid var(--border-subtle);
+            box-shadow: var(--shadow-soft);
+            padding: 22px 22px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.18), transparent 55%);
+            opacity: 0.9;
+            pointer-events: none;
+        }
+
+        .card-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .headline {
+            font-size: 26px;
+            font-weight: 600;
+            margin: 0 0 8px;
+        }
+
+        .headline span.accent {
+            color: var(--accent);
+        }
+
+        .subheadline {
+            margin: 0 0 18px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .badge {
+            font-size: 11px;
+            border-radius: 999px;
+            padding: 4px 10px;
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            color: var(--text-muted);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(15, 23, 42, 0.7);
+        }
+
+        .badge strong {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 999px;
+            background: rgba(148, 163, 184, 0.8);
+        }
+
+        .points {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: 10px;
+            margin: 4px 0 18px;
+        }
+
+        .point {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .point-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 999px;
+            background: rgba(59, 130, 246, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        .point strong {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .cta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+            border-radius: 999px;
+            padding: 10px 18px;
+            font-size: 13px;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all 0.18s ease-out;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #2563eb, #3b82f6, #22c55e);
+            color: #f9fafb;
+            box-shadow: 0 12px 30px rgba(59, 130, 246, 0.55);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px) scale(1.01);
+            box-shadow: 0 18px 40px rgba(59, 130, 246, 0.65);
+        }
+
+        .btn-secondary {
+            background: rgba(15, 23, 42, 0.9);
+            color: var(--text-muted);
+            border: 1px solid rgba(148, 163, 184, 0.5);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(30, 64, 175, 0.2);
+            color: var(--text-main);
+        }
+
+        .btn-primary span.icon,
+        .btn-secondary span.icon {
+            font-size: 15px;
+        }
+
+        .mini-meta {
+            margin-top: 10px;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .mini-meta code {
+            font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 6px;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(75, 85, 99, 0.6);
+            color: #e5e7eb;
+        }
+
+        /* Right card - pipeline steps */
+        .steps-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .steps-header h2 {
+            font-size: 15px;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .steps-header span {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .steps-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 10px;
+        }
+
+        .step {
+            display: grid;
+            grid-template-columns: auto minmax(0, 1fr);
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .step-index {
+            width: 24px;
+            height: 24px;
+            border-radius: 999px;
+            background: rgba(31, 41, 55, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            border: 1px solid rgba(55, 65, 81, 0.8);
+        }
+
+        .step-content h3 {
+            margin: 0 0 4px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .step-content p {
+            margin: 0 0 4px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .step-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .step-tag {
+            font-size: 10px;
+            padding: 3px 7px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(55, 65, 81, 0.8);
+            color: #9ca3af;
+        }
+
+        footer {
+            margin-top: 22px;
+            font-size: 11px;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        footer a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Small hover pulse on cards */
+        .card:hover {
+            border-color: rgba(59, 130, 246, 0.6);
+            transform: translateY(-1px);
+            transition: all 0.18s ease-out;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <header>
+        <div class="brand">
+            <div class="brand-logo">FD</div>
+            <div class="brand-title">
+                <h1>Fraud Detection System</h1>
+                <span>End-to-end ML pipeline for suspicious transaction monitoring</span>
+            </div>
+        </div>
+        <div class="header-cta">
+            <div class="pill">
+                <span class="pill-dot"></span>
+                Real-time scoring API
+            </div>
+            <div class="pill">
+                PR‑AUC optimized · XGBoost / LightGBM / Random Forest
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Left: Overview & CTA -->
+        <section class="card">
+            <div class="card-inner">
+                <h2 class="headline">
+                    Detect <span class="accent">high‑risk</span> payments in real time.
+                </h2>
+                <p class="subheadline">
+                    Use the offline pipeline to ingest data, engineer features, train multiple models, and select the best one using PR‑AUC. 
+                    Then expose a simple API to score live transactions.
+                </p>
+
+                <div class="badges">
+                    <div class="badge">
+                        <span class="badge-dot"></span>
+                        <strong>Dataset:</strong> PaySim (simulated mobile money)
+                    </div>
+                    <div class="badge">
+                        <span class="badge-dot"></span>
+                        <strong>Latency:</strong> &lt; 100 ms per transaction
+                    </div>
+                    <div class="badge">
+                        <span class="badge-dot"></span>
+                        <strong>Targets:</strong> FRAUD vs LEGITIMATE
+                    </div>
+                </div>
+
+                <div class="points">
+                    <div class="point">
+                        <div class="point-icon">①</div>
+                        <div>
+                            <strong>Build & evaluate models offline.</strong><br />
+                            Train Logistic Regression, Gradient Boosting, LightGBM, XGBoost, and Random Forest; compare on PR‑AUC and business KPIs.
+                        </div>
+                    </div>
+                    <div class="point">
+                        <div class="point-icon">②</div>
+                        <div>
+                            <strong>Serve predictions through a web form.</strong><br />
+                            Send a single transaction through the UI and instantly see the model’s classification with explanations.
+                        </div>
+                    </div>
+                    <div class="point">
+                        <div class="point-icon">③</div>
+                        <div>
+                            <strong>Extend to batch & APIs.</strong><br />
+                            Score CSV files for back‑testing or connect this service to upstream payment systems.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cta-row">
+                    <a href="/predict" class="btn-primary">
+                        <span class="icon">⚡</span>
+                        Open Transaction Scanner
+                    </a>
+                    <button class="btn-secondary" onclick="toggleHowToRun()">
+                        <span class="icon">💻</span>
+                        How to run locally
+                    </button>
+                </div>
+
+                <div id="how-to-run" class="mini-meta" style="display:none; margin-top:14px;">
+                    <div>Run the app locally:</div>
+                    <div style="margin-top:4px;">
+                        <code>python application.py</code> then open <code>http://localhost:5000</code> in your browser.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right: Pipeline overview -->
+        <aside class="card">
+            <div class="card-inner">
+                <div class="steps-header">
+                    <h2>Pipeline at a glance</h2>
+                    <span>From raw logs to real‑time alerts</span>
+                </div>
+                <ul class="steps-list">
+                    <li class="step">
+                        <div class="step-index">1</div>
+                        <div class="step-content">
+                            <h3>Data ingestion & cleaning</h3>
+                            <p>Load PaySim transaction logs, handle missing values, and standardize schema for downstream features.</p>
+                            <div class="step-tags">
+                                <span class="step-tag">pandas</span>
+                                <span class="step-tag">validation</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="step">
+                        <div class="step-index">2</div>
+                        <div class="step-content">
+                            <h3>Feature engineering</h3>
+                            <p>Create risk scores, velocity features, and relationship flags between origin and destination accounts.</p>
+                            <div class="step-tags">
+                                <span class="step-tag">feature store</span>
+                                <span class="step-tag">domain rules</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="step">
+                        <div class="step-index">3</div>
+                        <div class="step-content">
+                            <h3>Model training & selection</h3>
+                            <p>Train multiple models and select the best configuration based on PR‑AUC and expected business impact.</p>
+                            <div class="step-tags">
+                                <span class="step-tag">PR‑AUC</span>
+                                <span class="step-tag">cross‑validation</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="step">
+                        <div class="step-index">4</div>
+                        <div class="step-content">
+                            <h3>Online scoring service</h3>
+                            <p>Expose the champion model behind an HTTP endpoint used by this UI and by batch scoring jobs.</p>
+                            <div class="step-tags">
+                                <span class="step-tag">Flask / FastAPI</span>
+                                <span class="step-tag">real time</span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+    </main>
+
+    <footer>
+        <span>Demo project · Not production financial advice.</span>
+        <span>Try a sample transaction on the <a href="/predict">Transaction Scanner</a>.</span>
+    </footer>
+</div>
+
+<script>
+    function toggleHowToRun() {
+        const el = document.getElementById('how-to-run');
+        el.style.display = el.style.display === 'none' ? 'block' : 'none';
+    }
+</script>
+</body>
+</html>

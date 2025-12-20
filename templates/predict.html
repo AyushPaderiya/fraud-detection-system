@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Transaction Scanner | Fraud Detection System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <style>
+        :root {
+            --bg: #020617;
+            --bg-elevated: #020617;
+            --card: #020617;
+            --border-subtle: #1e293b;
+            --accent: #3b82f6;
+            --accent-soft: rgba(59, 130, 246, 0.18);
+            --danger: #f97373;
+            --danger-soft: rgba(248, 113, 113, 0.16);
+            --success: #22c55e;
+            --success-soft: rgba(34, 197, 94, 0.16);
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+            --card-radius: 16px;
+            --shadow-soft: 0 20px 50px rgba(15, 23, 42, 0.9);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top, #1e293b 0, #020617 45%, #000 100%);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+        }
+
+        .page {
+            width: 100%;
+            max-width: 1280px;
+            padding: 24px 16px 32px;
+            margin: auto;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-logo {
+            width: 34px;
+            height: 34px;
+            border-radius: 12px;
+            background: radial-gradient(circle at 30% 20%, #4ade80, #22c55e 35%, #16a34a 55%, #14532d 100%);
+            box-shadow: 0 0 18px rgba(34, 197, 94, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 800;
+            color: #022c22;
+        }
+
+        .brand-text h1 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .brand-text span {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-header {
+            padding: 7px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            background: rgba(15, 23, 42, 0.9);
+            color: var(--text-muted);
+            font-size: 12px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-header:hover {
+            border-color: var(--accent);
+            color: var(--text-main);
+        }
+
+        .btn-header span.icon {
+            font-size: 14px;
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: minmax(0, 3.3fr) minmax(0, 2.7fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 960px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel {
+            background: rgba(15, 23, 42, 0.95);
+            border-radius: var(--card-radius);
+            border: 1px solid var(--border-subtle);
+            box-shadow: var(--shadow-soft);
+            padding: 20px 20px 18px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .panel::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.16), transparent 55%);
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        .panel-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .panel-header h2 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .panel-header span {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .model-pill {
+            font-size: 11px;
+            border-radius: 999px;
+            padding: 4px 10px;
+            background: rgba(30, 64, 175, 0.35);
+            border: 1px solid rgba(59, 130, 246, 0.65);
+            color: #bfdbfe;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .model-pill span.dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #22c55e;
+            box-shadow: 0 0 12px rgba(34, 197, 94, 0.9);
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px 16px;
+        }
+
+        @media (max-width: 720px) {
+            form {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 13px;
+        }
+
+        .field label {
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .field small {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        input[type="number"],
+        input[type="text"],
+        select {
+            border-radius: 9px;
+            border: 1px solid rgba(55, 65, 81, 0.9);
+            background: rgba(15, 23, 42, 0.9);
+            color: var(--text-main);
+            font-size: 13px;
+            padding: 8px 9px;
+            outline: none;
+            transition: all 0.16s ease-out;
+        }
+
+        input::placeholder {
+            color: #4b5563;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.4);
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        .field-inline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .field-inline small {
+            flex-shrink: 0;
+        }
+
+        .hint-row {
+            grid-column: 1 / -1;
+            font-size: 11px;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+
+        .hint-row span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hint-row span.badge {
+            border-radius: 999px;
+            padding: 3px 8px;
+            border: 1px solid rgba(75, 85, 99, 0.8);
+            background: rgba(15, 23, 42, 0.95);
+            font-size: 11px;
+        }
+
+        .actions {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: flex-start;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        .btn-primary,
+        .btn-ghost {
+            border-radius: 999px;
+            padding: 9px 16px;
+            font-size: 13px;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all 0.18s ease-out;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #2563eb, #3b82f6, #22c55e);
+            color: #f9fafb;
+            box-shadow: 0 12px 28px rgba(37, 99, 235, 0.6);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px) scale(1.01);
+        }
+
+        .btn-ghost {
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            background: rgba(15, 23, 42, 0.9);
+            color: var(--text-muted);
+        }
+
+        .btn-ghost:hover {
+            background: rgba(30, 64, 175, 0.25);
+            color: var(--text-main);
+        }
+
+        .btn-primary span.icon,
+        .btn-ghost span.icon {
+            font-size: 15px;
+        }
+
+        /* Result panel */
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .result-header h2 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .result-header span {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .error-banner {
+            margin-bottom: 12px;
+            padding: 8px 10px;
+            border-radius: 10px;
+            background: rgba(248, 113, 113, 0.1);
+            border: 1px solid rgba(248, 113, 113, 0.5);
+            font-size: 12px;
+            color: #fecaca;
+        }
+
+        .pill-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .pill-status span.dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 999px;
+        }
+
+        .pill-status.fraud {
+            background: var(--danger-soft);
+            color: #fecaca;
+            border: 1px solid rgba(248, 113, 113, 0.7);
+        }
+
+        .pill-status.fraud span.dot {
+            background: var(--danger);
+            box-shadow: 0 0 14px rgba(248, 113, 113, 0.9);
+        }
+
+        .pill-status.legit {
+            background: var(--success-soft);
+            color: #bbf7d0;
+            border: 1px solid rgba(34, 197, 94, 0.7);
+        }
+
+        .pill-status.legit span.dot {
+            background: var(--success);
+            box-shadow: 0 0 14px rgba(34, 197, 94, 0.9);
+        }
+
+        .result-body {
+            margin-top: 12px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .result-body h3 {
+            margin: 0 0 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .result-body p {
+            margin: 0 0 6px;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px 12px;
+            margin-top: 8px;
+        }
+
+        .result-item {
+            font-size: 12px;
+        }
+
+        .result-label {
+            color: var(--text-muted);
+        }
+
+        .result-value {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .empty-state {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        .empty-state strong {
+            color: var(--text-main);
+        }
+
+        footer {
+            margin-top: 18px;
+            font-size: 11px;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        footer a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <header>
+        <div class="brand">
+            <div class="brand-logo">FD</div>
+            <div class="brand-text">
+                <h1>Transaction Scanner</h1>
+                <span>Fill in transaction details and get an instant fraud prediction.</span>
+            </div>
+        </div>
+        <div class="header-actions">
+            <a href="/" class="btn-header">
+                <span class="icon">←</span>
+                Back to overview
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Left: Form -->
+        <section class="panel">
+            <div class="panel-inner">
+                <div class="panel-header">
+                    <div>
+                        <h2>Transaction details</h2>
+                        <span>Fields mirror the PaySim simulation schema.</span>
+                    </div>
+                    <div class="model-pill">
+                        <span class="dot"></span>
+                        Model: Production Fraud Detector
+                    </div>
+                </div>
+
+                <form method="POST" action="/predict">
+                    <!-- Step -->
+                    <div class="field">
+                        <label for="step">
+                            Step
+                            <small>Time index</small>
+                        </label>
+                        <input
+                            type="number"
+                            id="step"
+                            name="step"
+                            min="0"
+                            placeholder="e.g. 100"
+                            value="{{ form_data.step if form_data else '' }}"
+                            required
+                        />
+                    </div>
+
+                    <!-- Type -->
+                    <div class="field">
+                        <label for="type">
+                            Type
+                            <small>Channel</small>
+                        </label>
+                        {% set t = form_data.type if form_data else 'TRANSFER' %}
+                        <select id="type" name="type" required>
+                            <option value="PAYMENT"  {% if t == 'PAYMENT' %}selected{% endif %}>PAYMENT</option>
+                            <option value="TRANSFER" {% if t == 'TRANSFER' %}selected{% endif %}>TRANSFER</option>
+                            <option value="CASH_OUT" {% if t == 'CASH_OUT' %}selected{% endif %}>CASH_OUT</option>
+                            <option value="DEBIT"    {% if t == 'DEBIT' %}selected{% endif %}>DEBIT</option>
+                            <option value="CASH_IN"  {% if t == 'CASH_IN' %}selected{% endif %}>CASH_IN</option>
+                        </select>
+                    </div>
+
+                    <!-- Amount -->
+                    <div class="field">
+                        <label for="amount">
+                            Amount
+                            <small>Simulation currency</small>
+                        </label>
+                        <input
+                            type="number"
+                            id="amount"
+                            name="amount"
+                            min="0"
+                            step="0.01"
+                            placeholder="e.g. 5000.00"
+                            value="{{ form_data.amount if form_data else '' }}"
+                            required
+                        />
+                    </div>
+
+                    <!-- isFlaggedFraud -->
+                    <div class="field">
+                        <label for="isFlaggedFraud">
+                            isFlaggedFraud
+                            <small>Rule engine</small>
+                        </label>
+                        <select id="isFlaggedFraud" name="isFlaggedFraud" required>
+                            {% set flag = form_data.isFlaggedFraud if form_data else '0' %}
+                            <option value="0" {% if flag == '0' %}selected{% endif %}>0 - Not flagged</option>
+                            <option value="1" {% if flag == '1' %}selected{% endif %}>1 - Flagged</option>
+                        </select>
+                    </div>
+
+                    <!-- nameOrig -->
+                    <div class="field">
+                        <label for="nameOrig">
+                            nameOrig
+                            <small>Origin account</small>
+                        </label>
+                        <input
+                            type="text"
+                            id="nameOrig"
+                            name="nameOrig"
+                            placeholder="e.g. C123456789"
+                            value="{{ form_data.nameOrig if form_data else '' }}"
+                            required
+                        />
+                    </div>
+
+                    <!-- oldbalanceOrg -->
+                    <div class="field">
+                        <label for="oldbalanceOrg">
+                            oldbalanceOrg
+                            <small>Origin balance (before)</small>
+                        </label>
+                        <input
+                            type="number"
+                            id="oldbalanceOrg"
+                            name="oldbalanceOrg"
+                            min="0"
+                            step="0.01"
+                            placeholder="e.g. 10000.00"
+                            value="{{ form_data.oldbalanceOrg if form_data else '' }}"
+                            required
+                        />
+                    </div>
+
+                    <!-- newbalanceOrg -->
+                    <div class="field">
+                        <label for="newbalanceOrg">
+                            newbalanceOrg
+                            <small>Origin balance (after)</small>
+                        </label>
+                        <input
+                            type="number"
+                            id="newbalanceOrg"
+                            name="newbalanceOrg"
+                            min="0"
+                            step="0.01"
+                            placeholder="e.g. 5000.00"
+                            value="{{ form_data.newbalanceOrg if form_data else '' }}"
+                            required
+                        />
+                    </div>
+
+                    <!-- nameDest -->
+                    <div class="field">
+                        <label for="nameDest">
+                            nameDest
+                            <small>Destination account</small>
+                        </label>
+                        <input
+                            type="text"
+                            id="nameDest"
+                            name="nameDest"
+                            placeholder="e.g. M987654321"
+                            value="{{ form_data.nameDest if form_data else '' }}"
+                            required
+                        />
+                    </div>
+
+                    <!-- oldbalanceDest -->
+                    <div class="field">
+                        <label for="oldbalanceDest">
+                            oldbalanceDest
+                            <small>Destination balance (before)</small>
+                        </label>
+                        <input
+                            type="number"
+                            id="oldbalanceDest"
+                            name="oldbalanceDest"
+                            min="0"
+                            step="0.01"
+                            placeholder="e.g. 2000.00"
+                            value="{{ form_data.oldbalanceDest if form_data else '' }}"
+                            required
+                        />
+                    </div>
+
+                    <!-- newbalanceDest -->
+                    <div class="field">
+                        <label for="newbalanceDest">
+                            newbalanceDest
+                            <small>Destination balance (after)</small>
+                        </label>
+                        <input
+                            type="number"
+                            id="newbalanceDest"
+                            name="newbalanceDest"
+                            min="0"
+                            step="0.01"
+                            placeholder="e.g. 7000.00"
+                            value="{{ form_data.newbalanceDest if form_data else '' }}"
+                            required
+                        />
+                    </div>
+
+                    <!-- Hint row -->
+                    <div class="hint-row">
+                        <span>
+                            Tip: Use realistic combinations (e.g. <code>oldbalanceOrg - amount ≈ newbalanceOrg</code>) to get more meaningful scores.
+                        </span>
+                        <span class="badge">
+                            ⏱ Average scoring latency: &lt; 100 ms
+                        </span>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="actions">
+                        <button type="submit" class="btn-primary">
+                            <span class="icon">⚡</span>
+                            Run prediction
+                        </button>
+                        <a href="/" class="btn-ghost">
+                            <span class="icon">⌂</span>
+                            Back to home
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Right: Result panel -->
+        <section class="panel">
+            <div class="panel-inner">
+                <div class="result-header">
+                    <div>
+                        <h2>Prediction result</h2>
+                        <span>Review the model’s classification and context.</span>
+                    </div>
+                </div>
+
+                {% if error %}
+                <div class="error-banner">
+                    <strong>Error:</strong> {{ error }}
+                </div>
+                {% endif %}
+
+                {% if prediction %}
+                    {% if prediction == 'FRAUD' %}
+                        <div class="pill-status fraud">
+                            <span class="dot"></span>
+                            High‑risk transaction: FRAUD
+                        </div>
+                        <div class="result-body">
+                            <h3>Model assessment</h3>
+                            <p>
+                                This transaction exhibits patterns similar to known fraud cases. 
+                                Consider blocking it automatically or triggering manual review according to your playbook.
+                            </p>
+                            <div class="result-grid">
+                                <div class="result-item">
+                                    <div class="result-label">Suggested action</div>
+                                    <div class="result-value">Block / Queue for review</div>
+                                </div>
+                                <div class="result-item">
+                                    <div class="result-label">Rule engine flag</div>
+                                    <div class="result-value">
+                                        {% if form_data and form_data.isFlaggedFraud == '1' %}Yes{% else %}No{% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="pill-status legit">
+                            <span class="dot"></span>
+                            Low‑risk transaction: LEGITIMATE
+                        </div>
+                        <div class="result-body">
+                            <h3>Model assessment</h3>
+                            <p>
+                                The model does not detect strong fraud signals for this transaction. 
+                                Standard monitoring and downstream rules should still apply.
+                            </p>
+                            <div class="result-grid">
+                                <div class="result-item">
+                                    <div class="result-label">Suggested action</div>
+                                    <div class="result-value">Allow · Monitor</div>
+                                </div>
+                                <div class="result-item">
+                                    <div class="result-label">Rule engine flag</div>
+                                    <div class="result-value">
+                                        {% if form_data and form_data.isFlaggedFraud == '1' %}Yes{% else %}No{% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="empty-state">
+                        <strong>No prediction yet.</strong><br />
+                        Submit a transaction using the form on the left to see the model’s classification. 
+                        This panel will then act as a mini review dashboard for operators.
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <span>Demo project · Not production financial advice.</span>
+        <span>Back to <a href="/">project overview</a>.</span>
+    </footer>
+</div>
+</body>
+</html>
