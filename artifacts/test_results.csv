@@ -1,0 +1,2 @@
+model,test_roc_auc,test_pr_auc,test_f1,test_precision,test_recall,test_precision_at_90_recall,optimal_threshold,net_savings,roi_percent
+Random Forest,0.9998701654319121,0.9971377461704083,0.9979666531110207,1.0,0.9959415584415584,1.0,0.880475618555179,6073650,98.59821428571428
