@@ -510,37 +510,31 @@ Actual Legit 1270000 0     ← Zero false positives
 
 ---
 
-## 📸 Live Demo
+## 📸 Screenshots
 
 ### 🏠 Homepage
 
 The landing page provides an overview of the system architecture and quick access to the transaction scanner.
 
-- Project overview with pipeline visualization and key features
+![Homepage Screenshot](assets/homepage_screenshot.png)
 
 ### ⚡ Transaction Scanner
 
 Real-time fraud detection interface. Enter transaction details and get instant predictions with confidence scores.
 
-- User-friendly form for entering transaction details with inline validation
+![Transaction Scanner](assets/transaction_scanner.png)
 
 ### ✅ Legitimate Transaction Result
 
 Example of a low-risk transaction classified as legitimate.
 
-- Clear visualization of legitimate transaction with suggested action
+![Legitimate Transaction](assets/predict_screenshot.png)
 
 ### ⚠️ Fraud Detection Alert
 
 Example of a high-risk transaction flagged as fraudulent.
 
-- Fraud alert with detailed explanation and recommended actions
-
-### 📊 Model Dashboard (Optional)
-
-Real-time performance monitoring dashboard showing model metrics and predictions.
-
-- Live dashboard with metrics, confusion matrix, and recent predictions
+![Fraud Detection Alert](assets/fraud_alert.png)
 
 ---
 
