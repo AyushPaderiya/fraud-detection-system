@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>Transaction Scanner | Fraud Detection System</title>
+    <title>Check Your Transaction | Fraud Detection</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -50,7 +50,7 @@
             align-items: center;
             justify-content: space-between;
             gap: 12px;
-            margin-bottom: 18px;
+            margin-bottom: 24px;
         }
 
         .brand {
@@ -60,27 +60,27 @@
         }
 
         .brand-logo {
-            width: 34px;
-            height: 34px;
+            width: 36px;
+            height: 36px;
             border-radius: 12px;
             background: radial-gradient(circle at 30% 20%, #4ade80, #22c55e 35%, #16a34a 55%, #14532d 100%);
             box-shadow: 0 0 18px rgba(34, 197, 94, 0.7);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 800;
             color: #022c22;
         }
 
         .brand-text h1 {
             margin: 0;
-            font-size: 18px;
+            font-size: 19px;
             font-weight: 600;
         }
 
         .brand-text span {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-muted);
         }
 
@@ -101,15 +101,13 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
+            transition: all 0.2s ease;
         }
 
         .btn-header:hover {
             border-color: var(--accent);
             color: var(--text-main);
-        }
-
-        .btn-header span.icon {
-            font-size: 14px;
+            transform: translateY(-1px);
         }
 
         main {
@@ -129,7 +127,7 @@
             border-radius: var(--card-radius);
             border: 1px solid var(--border-subtle);
             box-shadow: var(--shadow-soft);
-            padding: 20px 20px 18px;
+            padding: 22px 22px 20px;
             position: relative;
             overflow: hidden;
         }
@@ -149,48 +147,43 @@
         }
 
         .panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            gap: 8px;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
         }
 
         .panel-header h2 {
-            margin: 0;
-            font-size: 16px;
-            font-weight: 500;
+            margin: 0 0 4px 0;
+            font-size: 18px;
+            font-weight: 600;
         }
 
-        .panel-header span {
-            font-size: 12px;
+        .panel-header p {
+            margin: 0;
+            font-size: 13px;
             color: var(--text-muted);
         }
 
-        .model-pill {
-            font-size: 11px;
-            border-radius: 999px;
-            padding: 4px 10px;
-            background: rgba(30, 64, 175, 0.35);
-            border: 1px solid rgba(59, 130, 246, 0.65);
-            color: #bfdbfe;
+        .security-badge {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            font-size: 11px;
+            color: #86efac;
+            margin-top: 8px;
         }
 
-        .model-pill span.dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 999px;
-            background: #22c55e;
-            box-shadow: 0 0 12px rgba(34, 197, 94, 0.9);
+        .security-badge span.icon {
+            font-size: 14px;
         }
 
         form {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 14px 16px;
+            gap: 18px 18px;
+            margin-top: 20px;
         }
 
         @media (max-width: 720px) {
@@ -202,106 +195,160 @@
         .field {
             display: flex;
             flex-direction: column;
-            gap: 4px;
-            font-size: 13px;
+            gap: 6px;
         }
 
-        .field label {
+        .field-label {
             font-weight: 500;
+            font-size: 14px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
             gap: 6px;
         }
 
-        .field small {
+        .tooltip {
+            position: relative;
+            display: inline-flex;
+            cursor: help;
+        }
+
+        .tooltip-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: rgba(59, 130, 246, 0.25);
+            color: #93c5fd;
             font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .tooltip-text {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            left: 50%;
+            bottom: 125%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.98);
+            color: #e5e7eb;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            width: 220px;
+            z-index: 100;
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            transition: all 0.2s ease;
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: rgba(15, 23, 42, 0.98);
+        }
+
+        .field-hint {
+            font-size: 12px;
             color: var(--text-muted);
+            margin-top: -2px;
         }
 
         input[type="number"],
         input[type="text"],
         select {
-            border-radius: 9px;
+            border-radius: 10px;
             border: 1px solid rgba(55, 65, 81, 0.9);
             background: rgba(15, 23, 42, 0.9);
             color: var(--text-main);
-            font-size: 13px;
-            padding: 8px 9px;
+            font-size: 14px;
+            padding: 10px 12px;
             outline: none;
-            transition: all 0.16s ease-out;
+            transition: all 0.2s ease;
+            font-family: inherit;
         }
 
         input::placeholder {
-            color: #4b5563;
+            color: #6b7280;
         }
 
         input:focus,
         select:focus {
             border-color: var(--accent);
-            box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.4);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
         }
 
         select {
             cursor: pointer;
         }
 
-        .field-inline {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .field-inline small {
-            flex-shrink: 0;
-        }
-
-        .hint-row {
+        .example-values {
             grid-column: 1 / -1;
-            font-size: 11px;
+            padding: 12px 14px;
+            border-radius: 10px;
+            background: rgba(59, 130, 246, 0.08);
+            border: 1px solid rgba(59, 130, 246, 0.25);
+            font-size: 12px;
             color: var(--text-muted);
-            display: flex;
-            justify-content: space-between;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-top: 4px;
         }
 
-        .hint-row span {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+        .example-values strong {
+            color: var(--text-main);
+            display: block;
+            margin-bottom: 4px;
         }
 
-        .hint-row span.badge {
-            border-radius: 999px;
-            padding: 3px 8px;
-            border: 1px solid rgba(75, 85, 99, 0.8);
-            background: rgba(15, 23, 42, 0.95);
+        .example-values button {
+            margin-top: 8px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            background: rgba(59, 130, 246, 0.15);
+            color: #93c5fd;
             font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .example-values button:hover {
+            background: rgba(59, 130, 246, 0.25);
+            border-color: var(--accent);
         }
 
         .actions {
             grid-column: 1 / -1;
             display: flex;
             justify-content: flex-start;
-            gap: 10px;
-            margin-top: 4px;
+            gap: 12px;
+            margin-top: 8px;
         }
 
         .btn-primary,
         .btn-ghost {
             border-radius: 999px;
-            padding: 9px 16px;
-            font-size: 13px;
+            padding: 11px 20px;
+            font-size: 14px;
+            font-weight: 500;
             border: none;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 8px;
             text-decoration: none;
-            transition: all 0.18s ease-out;
+            transition: all 0.2s ease;
         }
 
         .btn-primary {
@@ -311,7 +358,8 @@
         }
 
         .btn-primary:hover {
-            transform: translateY(-1px) scale(1.01);
+            transform: translateY(-2px);
+            box-shadow: 0 16px 32px rgba(37, 99, 235, 0.7);
         }
 
         .btn-ghost {
@@ -325,54 +373,46 @@
             color: var(--text-main);
         }
 
-        .btn-primary span.icon,
-        .btn-ghost span.icon {
-            font-size: 15px;
-        }
-
         /* Result panel */
         .result-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            gap: 8px;
-            margin-bottom: 10px;
+            margin-bottom: 14px;
         }
 
         .result-header h2 {
-            margin: 0;
-            font-size: 16px;
-            font-weight: 500;
+            margin: 0 0 4px 0;
+            font-size: 18px;
+            font-weight: 600;
         }
 
-        .result-header span {
-            font-size: 12px;
+        .result-header p {
+            margin: 0;
+            font-size: 13px;
             color: var(--text-muted);
         }
 
         .error-banner {
-            margin-bottom: 12px;
-            padding: 8px 10px;
+            margin-bottom: 14px;
+            padding: 10px 12px;
             border-radius: 10px;
             background: rgba(248, 113, 113, 0.1);
             border: 1px solid rgba(248, 113, 113, 0.5);
-            font-size: 12px;
+            font-size: 13px;
             color: #fecaca;
         }
 
         .pill-status {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px 12px;
+            gap: 10px;
+            padding: 10px 16px;
             border-radius: 999px;
-            font-size: 12px;
-            font-weight: 500;
+            font-size: 13px;
+            font-weight: 600;
         }
 
         .pill-status span.dot {
-            width: 9px;
-            height: 9px;
+            width: 10px;
+            height: 10px;
             border-radius: 999px;
         }
 
@@ -384,7 +424,8 @@
 
         .pill-status.fraud span.dot {
             background: var(--danger);
-            box-shadow: 0 0 14px rgba(248, 113, 113, 0.9);
+            box-shadow: 0 0 16px rgba(248, 113, 113, 0.9);
+            animation: pulse 2s infinite;
         }
 
         .pill-status.legit {
@@ -395,35 +436,50 @@
 
         .pill-status.legit span.dot {
             background: var(--success);
-            box-shadow: 0 0 14px rgba(34, 197, 94, 0.9);
+            box-shadow: 0 0 16px rgba(34, 197, 94, 0.9);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
         .result-body {
-            margin-top: 12px;
-            font-size: 13px;
-            color: var(--text-muted);
+            margin-top: 16px;
         }
 
         .result-body h3 {
-            margin: 0 0 6px;
-            font-size: 13px;
-            font-weight: 500;
+            margin: 0 0 8px;
+            font-size: 14px;
+            font-weight: 600;
             color: var(--text-main);
         }
 
         .result-body p {
-            margin: 0 0 6px;
+            margin: 0 0 14px;
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
         }
 
-        .result-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 8px 12px;
-            margin-top: 8px;
+        .result-details {
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 10px;
+            padding: 12px 14px;
+            border: 1px solid rgba(55, 65, 81, 0.6);
         }
 
         .result-item {
-            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(55, 65, 81, 0.4);
+            font-size: 13px;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
         }
 
         .result-label {
@@ -436,17 +492,30 @@
         }
 
         .empty-state {
-            font-size: 13px;
+            font-size: 14px;
             color: var(--text-muted);
-            margin-top: 8px;
+            line-height: 1.6;
+            padding: 20px;
+            text-align: center;
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 10px;
+            border: 1px dashed rgba(148, 163, 184, 0.3);
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+            opacity: 0.5;
         }
 
         .empty-state strong {
             color: var(--text-main);
+            display: block;
+            margin-bottom: 6px;
         }
 
         footer {
-            margin-top: 18px;
+            margin-top: 24px;
             font-size: 11px;
             color: var(--text-muted);
             display: flex;
@@ -469,16 +538,15 @@
 <div class="page">
     <header>
         <div class="brand">
-            <div class="brand-logo">FD</div>
+            <div class="brand-logo">🛡️</div>
             <div class="brand-text">
-                <h1>Transaction Scanner</h1>
-                <span>Fill in transaction details and get an instant fraud prediction.</span>
+                <h1>Transaction Security Check</h1>
+                <span>Verify if your transaction is safe in real-time</span>
             </div>
         </div>
         <div class="header-actions">
             <a href="/" class="btn-header">
-                <span class="icon">←</span>
-                Back to overview
+                ← Back to Home
             </a>
         </div>
     </header>
@@ -488,55 +556,43 @@
         <section class="panel">
             <div class="panel-inner">
                 <div class="panel-header">
-                    <div>
-                        <h2>Transaction details</h2>
-                        <span>Fields mirror the PaySim simulation schema.</span>
-                    </div>
-                    <div class="model-pill">
-                        <span class="dot"></span>
-                        Model: Production Fraud Detector
+                    <h2>Enter Transaction Details</h2>
+                    <p>Fill in the information about your money transfer to check for any security risks.</p>
+                    <div class="security-badge">
+                        <span class="icon">🔒</span>
+                        Your information is secure and not stored
                     </div>
                 </div>
 
                 <form method="POST" action="/predict">
-                    <!-- Step -->
+                    
+                    <!-- Transaction Type -->
                     <div class="field">
-                        <label for="step">
-                            Step
-                            <small>Time index</small>
-                        </label>
-                        <input
-                            type="number"
-                            id="step"
-                            name="step"
-                            min="0"
-                            placeholder="e.g. 100"
-                            value="{{ form_data.step if form_data else '' }}"
-                            required
-                        />
-                    </div>
-
-                    <!-- Type -->
-                    <div class="field">
-                        <label for="type">
-                            Type
-                            <small>Channel</small>
+                        <label class="field-label" for="type">
+                            What are you doing?
+                            <div class="tooltip">
+                                <span class="tooltip-icon">?</span>
+                                <span class="tooltip-text">Select the type of transaction you're making - payment to merchant, transfer to friend, or cash withdrawal</span>
+                            </div>
                         </label>
                         {% set t = form_data.type if form_data else 'TRANSFER' %}
                         <select id="type" name="type" required>
-                            <option value="PAYMENT"  {% if t == 'PAYMENT' %}selected{% endif %}>PAYMENT</option>
-                            <option value="TRANSFER" {% if t == 'TRANSFER' %}selected{% endif %}>TRANSFER</option>
-                            <option value="CASH_OUT" {% if t == 'CASH_OUT' %}selected{% endif %}>CASH_OUT</option>
-                            <option value="DEBIT"    {% if t == 'DEBIT' %}selected{% endif %}>DEBIT</option>
-                            <option value="CASH_IN"  {% if t == 'CASH_IN' %}selected{% endif %}>CASH_IN</option>
+                            <option value="PAYMENT"  {% if t == 'PAYMENT' %}selected{% endif %}>💳 Paying a store/merchant</option>
+                            <option value="TRANSFER" {% if t == 'TRANSFER' %}selected{% endif %}>💸 Sending money to someone</option>
+                            <option value="CASH_OUT" {% if t == 'CASH_OUT' %}selected{% endif %}>🏧 Withdrawing cash</option>
+                            <option value="DEBIT"    {% if t == 'DEBIT' %}selected{% endif %}>💰 Direct debit/payment</option>
+                            <option value="CASH_IN"  {% if t == 'CASH_IN' %}selected{% endif %}>💵 Depositing cash</option>
                         </select>
                     </div>
 
                     <!-- Amount -->
                     <div class="field">
-                        <label for="amount">
-                            Amount
-                            <small>Simulation currency</small>
+                        <label class="field-label" for="amount">
+                            How much money?
+                            <div class="tooltip">
+                                <span class="tooltip-icon">?</span>
+                                <span class="tooltip-text">Enter the amount you're sending or receiving in your local currency</span>
+                            </div>
                         </label>
                         <input
                             type="number"
@@ -544,46 +600,41 @@
                             name="amount"
                             min="0"
                             step="0.01"
-                            placeholder="e.g. 5000.00"
+                            placeholder="e.g., 5000.00"
                             value="{{ form_data.amount if form_data else '' }}"
                             required
                         />
+                        <span class="field-hint">Enter the transaction amount</span>
                     </div>
 
-                    <!-- isFlaggedFraud -->
+                    <!-- Sender Account ID -->
                     <div class="field">
-                        <label for="isFlaggedFraud">
-                            isFlaggedFraud
-                            <small>Rule engine</small>
-                        </label>
-                        <select id="isFlaggedFraud" name="isFlaggedFraud" required>
-                            {% set flag = form_data.isFlaggedFraud if form_data else '0' %}
-                            <option value="0" {% if flag == '0' %}selected{% endif %}>0 - Not flagged</option>
-                            <option value="1" {% if flag == '1' %}selected{% endif %}>1 - Flagged</option>
-                        </select>
-                    </div>
-
-                    <!-- nameOrig -->
-                    <div class="field">
-                        <label for="nameOrig">
-                            nameOrig
-                            <small>Origin account</small>
+                        <label class="field-label" for="nameOrig">
+                            Your Account Number
+                            <div class="tooltip">
+                                <span class="tooltip-icon">?</span>
+                                <span class="tooltip-text">Your unique account number (usually starts with 'C' followed by numbers)</span>
+                            </div>
                         </label>
                         <input
                             type="text"
                             id="nameOrig"
                             name="nameOrig"
-                            placeholder="e.g. C123456789"
+                            placeholder="e.g., C123456789"
                             value="{{ form_data.nameOrig if form_data else '' }}"
                             required
                         />
+                        <span class="field-hint">The account sending money</span>
                     </div>
 
-                    <!-- oldbalanceOrg -->
+                    <!-- Sender Balance Before -->
                     <div class="field">
-                        <label for="oldbalanceOrg">
-                            oldbalanceOrg
-                            <small>Origin balance (before)</small>
+                        <label class="field-label" for="oldbalanceOrg">
+                            Your Balance (Before)
+                            <div class="tooltip">
+                                <span class="tooltip-icon">?</span>
+                                <span class="tooltip-text">How much money is in your account right now, before making this transaction</span>
+                            </div>
                         </label>
                         <input
                             type="number"
@@ -591,51 +642,63 @@
                             name="oldbalanceOrg"
                             min="0"
                             step="0.01"
-                            placeholder="e.g. 10000.00"
+                            placeholder="e.g., 10000.00"
                             value="{{ form_data.oldbalanceOrg if form_data else '' }}"
                             required
                         />
+                        <span class="field-hint">Current balance in your account</span>
                     </div>
 
-                    <!-- newbalanceOrg -->
+                    <!-- Sender Balance After -->
                     <div class="field">
-                        <label for="newbalanceOrg">
-                            newbalanceOrg
-                            <small>Origin balance (after)</small>
+                        <label class="field-label" for="newbalanceOrig">
+                            Your Balance (After)
+                            <div class="tooltip">
+                                <span class="tooltip-icon">?</span>
+                                <span class="tooltip-text">How much money will be left in your account after this transaction</span>
+                            </div>
                         </label>
                         <input
                             type="number"
-                            id="newbalanceOrg"
-                            name="newbalanceOrg"
+                            id="newbalanceOrig"
+                            name="newbalanceOrig"
                             min="0"
                             step="0.01"
-                            placeholder="e.g. 5000.00"
-                            value="{{ form_data.newbalanceOrg if form_data else '' }}"
+                            placeholder="e.g., 5000.00"
+                            value="{{ form_data.newbalanceOrig if form_data else '' }}"
                             required
                         />
+                        <span class="field-hint">Expected balance after sending money</span>
                     </div>
 
-                    <!-- nameDest -->
+                    <!-- Recipient Account ID -->
                     <div class="field">
-                        <label for="nameDest">
-                            nameDest
-                            <small>Destination account</small>
+                        <label class="field-label" for="nameDest">
+                            Recipient's Account Number
+                            <div class="tooltip">
+                                <span class="tooltip-icon">?</span>
+                                <span class="tooltip-text">The account receiving the money (starts with 'C' for customer or 'M' for merchant)</span>
+                            </div>
                         </label>
                         <input
                             type="text"
                             id="nameDest"
                             name="nameDest"
-                            placeholder="e.g. M987654321"
+                            placeholder="e.g., M987654321 or C555555555"
                             value="{{ form_data.nameDest if form_data else '' }}"
                             required
                         />
+                        <span class="field-hint">The account receiving money</span>
                     </div>
 
-                    <!-- oldbalanceDest -->
+                    <!-- Recipient Balance Before -->
                     <div class="field">
-                        <label for="oldbalanceDest">
-                            oldbalanceDest
-                            <small>Destination balance (before)</small>
+                        <label class="field-label" for="oldbalanceDest">
+                            Recipient Balance (Before)
+                            <div class="tooltip">
+                                <span class="tooltip-icon">?</span>
+                                <span class="tooltip-text">How much money the recipient has before receiving this payment</span>
+                            </div>
                         </label>
                         <input
                             type="number"
@@ -643,17 +706,21 @@
                             name="oldbalanceDest"
                             min="0"
                             step="0.01"
-                            placeholder="e.g. 2000.00"
+                            placeholder="e.g., 2000.00"
                             value="{{ form_data.oldbalanceDest if form_data else '' }}"
                             required
                         />
+                        <span class="field-hint">Current balance in recipient's account</span>
                     </div>
 
-                    <!-- newbalanceDest -->
+                    <!-- Recipient Balance After -->
                     <div class="field">
-                        <label for="newbalanceDest">
-                            newbalanceDest
-                            <small>Destination balance (after)</small>
+                        <label class="field-label" for="newbalanceDest">
+                            Recipient Balance (After)
+                            <div class="tooltip">
+                                <span class="tooltip-icon">?</span>
+                                <span class="tooltip-text">How much money the recipient will have after receiving this payment</span>
+                            </div>
                         </label>
                         <input
                             type="number"
@@ -661,31 +728,65 @@
                             name="newbalanceDest"
                             min="0"
                             step="0.01"
-                            placeholder="e.g. 7000.00"
+                            placeholder="e.g., 7000.00"
                             value="{{ form_data.newbalanceDest if form_data else '' }}"
                             required
                         />
+                        <span class="field-hint">Expected balance after receiving money</span>
                     </div>
 
-                    <!-- Hint row -->
-                    <div class="hint-row">
-                        <span>
-                            Tip: Use realistic combinations (e.g. <code>oldbalanceOrg - amount ≈ newbalanceOrg</code>) to get more meaningful scores.
-                        </span>
-                        <span class="badge">
-                            ⏱ Average scoring latency: &lt; 100 ms
-                        </span>
+                    <!-- Step (simplified) -->
+                    <div class="field">
+                        <label class="field-label" for="step">
+                            Transaction Time
+                            <div class="tooltip">
+                                <span class="tooltip-icon">?</span>
+                                <span class="tooltip-text">Hour of the day when this transaction is happening (0-23). Most fraud happens late at night.</span>
+                            </div>
+                        </label>
+                        <input
+                            type="number"
+                            id="step"
+                            name="step"
+                            min="0"
+                            max="744"
+                            placeholder="e.g., 14 (for 2 PM)"
+                            value="{{ form_data.step if form_data else '' }}"
+                            required
+                        />
+                        <span class="field-hint">Hour of day (0-23) or use any number</span>
+                    </div>
+
+                    <!-- Flagged Status -->
+                    <div class="field">
+                        <label class="field-label" for="isFlaggedFraud">
+                            Previously Flagged?
+                            <div class="tooltip">
+                                <span class="tooltip-icon">?</span>
+                                <span class="tooltip-text">Has this transaction been flagged by your bank's automatic system as potentially risky?</span>
+                            </div>
+                        </label>
+                        {% set flag = form_data.isFlaggedFraud if form_data else '0' %}
+                        <select id="isFlaggedFraud" name="isFlaggedFraud" required>
+                            <option value="0" {% if flag == '0' %}selected{% endif %}>❌ No, looks normal</option>
+                            <option value="1" {% if flag == '1' %}selected{% endif %}>⚠️ Yes, flagged by system</option>
+                        </select>
+                    </div>
+
+                    <!-- Example Values Helper -->
+                    <div class="example-values">
+                        <strong>💡 Not sure what to enter?</strong>
+                        Try this example: Someone sending $5,000 to a friend from their $10,000 balance.
+                        <button type="button" onclick="fillExample()">Fill Example Values</button>
                     </div>
 
                     <!-- Actions -->
                     <div class="actions">
                         <button type="submit" class="btn-primary">
-                            <span class="icon">⚡</span>
-                            Run prediction
+                            🔍 Check Transaction Security
                         </button>
                         <a href="/" class="btn-ghost">
-                            <span class="icon">⌂</span>
-                            Back to home
+                            Cancel
                         </a>
                     </div>
                 </form>
@@ -696,15 +797,13 @@
         <section class="panel">
             <div class="panel-inner">
                 <div class="result-header">
-                    <div>
-                        <h2>Prediction result</h2>
-                        <span>Review the model’s classification and context.</span>
-                    </div>
+                    <h2>Security Check Result</h2>
+                    <p>Our system will analyze the transaction for fraud patterns.</p>
                 </div>
 
                 {% if error %}
                 <div class="error-banner">
-                    <strong>Error:</strong> {{ error }}
+                    <strong>⚠️ Error:</strong> {{ error }}
                 </div>
                 {% endif %}
 
@@ -712,57 +811,71 @@
                     {% if prediction == 'FRAUD' %}
                         <div class="pill-status fraud">
                             <span class="dot"></span>
-                            High‑risk transaction: FRAUD
+                            ⚠️ HIGH RISK - Potential Fraud Detected
                         </div>
                         <div class="result-body">
-                            <h3>Model assessment</h3>
+                            <h3>What does this mean?</h3>
                             <p>
-                                This transaction exhibits patterns similar to known fraud cases. 
-                                Consider blocking it automatically or triggering manual review according to your playbook.
+                                Our security system found suspicious patterns in this transaction that are similar to known fraud cases. 
+                                This transaction might not be safe.
                             </p>
-                            <div class="result-grid">
+                            
+                            <div class="result-details">
                                 <div class="result-item">
-                                    <div class="result-label">Suggested action</div>
-                                    <div class="result-value">Block / Queue for review</div>
+                                    <span class="result-label">Our Recommendation</span>
+                                    <span class="result-value" style="color: #fca5a5;">🚫 Do Not Proceed</span>
                                 </div>
                                 <div class="result-item">
-                                    <div class="result-label">Rule engine flag</div>
-                                    <div class="result-value">
-                                        {% if form_data and form_data.isFlaggedFraud == '1' %}Yes{% else %}No{% endif %}
-                                    </div>
+                                    <span class="result-label">Risk Level</span>
+                                    <span class="result-value" style="color: #fca5a5;">High</span>
+                                </div>
+                                <div class="result-item">
+                                    <span class="result-label">What to do?</span>
+                                    <span class="result-value">Contact your bank immediately</span>
                                 </div>
                             </div>
+
+                            <p style="margin-top: 12px; font-size: 12px; color: #fca5a5;">
+                                ⚠️ <strong>Warning:</strong> If you didn't initiate this transaction, someone may have unauthorized access to your account.
+                            </p>
                         </div>
                     {% else %}
                         <div class="pill-status legit">
                             <span class="dot"></span>
-                            Low‑risk transaction: LEGITIMATE
+                            ✅ SAFE - Transaction Looks Good
                         </div>
                         <div class="result-body">
-                            <h3>Model assessment</h3>
+                            <h3>What does this mean?</h3>
                             <p>
-                                The model does not detect strong fraud signals for this transaction. 
-                                Standard monitoring and downstream rules should still apply.
+                                Good news! Our security system did not find any suspicious patterns in this transaction. 
+                                The transaction appears to be legitimate and safe.
                             </p>
-                            <div class="result-grid">
+                            
+                            <div class="result-details">
                                 <div class="result-item">
-                                    <div class="result-label">Suggested action</div>
-                                    <div class="result-value">Allow · Monitor</div>
+                                    <span class="result-label">Our Recommendation</span>
+                                    <span class="result-value" style="color: #86efac;">✅ Safe to Proceed</span>
                                 </div>
                                 <div class="result-item">
-                                    <div class="result-label">Rule engine flag</div>
-                                    <div class="result-value">
-                                        {% if form_data and form_data.isFlaggedFraud == '1' %}Yes{% else %}No{% endif %}
-                                    </div>
+                                    <span class="result-label">Risk Level</span>
+                                    <span class="result-value" style="color: #86efac;">Low</span>
+                                </div>
+                                <div class="result-item">
+                                    <span class="result-label">What to do?</span>
+                                    <span class="result-value">Continue with your transaction</span>
                                 </div>
                             </div>
+
+                            <p style="margin-top: 12px; font-size: 12px; color: #86efac;">
+                                ✓ <strong>Note:</strong> While this transaction looks safe, always verify recipient details before sending money.
+                            </p>
                         </div>
                     {% endif %}
                 {% else %}
                     <div class="empty-state">
-                        <strong>No prediction yet.</strong><br />
-                        Submit a transaction using the form on the left to see the model’s classification. 
-                        This panel will then act as a mini review dashboard for operators.
+                        <div class="empty-state-icon">🔍</div>
+                        <strong>Ready to Check</strong>
+                        Fill in the transaction details on the left and click "Check Transaction Security" to see if the transaction is safe.
                     </div>
                 {% endif %}
             </div>
@@ -770,9 +883,50 @@
     </main>
 
     <footer>
-        <span>Demo project · Not production financial advice.</span>
-        <span>Back to <a href="/">project overview</a>.</span>
+        <span>🔒 This is a security demo tool. Always follow your bank's official procedures.</span>
+        <span><a href="/">← Return to homepage</a></span>
     </footer>
 </div>
+
+<script>
+    function fillExample() {
+        // Fill in example values that make sense to a regular user
+        document.getElementById('type').value = 'TRANSFER';
+        document.getElementById('amount').value = '5000.00';
+        document.getElementById('nameOrig').value = 'C123456789';
+        document.getElementById('oldbalanceOrg').value = '10000.00';
+        document.getElementById('newbalanceOrig').value = '5000.00';
+        document.getElementById('nameDest').value = 'C987654321';
+        document.getElementById('oldbalanceDest').value = '2000.00';
+        document.getElementById('newbalanceDest').value = '7000.00';
+        document.getElementById('step').value = '14';
+        document.getElementById('isFlaggedFraud').value = '0';
+    }
+
+    // Auto-calculate balances to help users
+    const amountInput = document.getElementById('amount');
+    const oldBalanceOrig = document.getElementById('oldbalanceOrg');
+    const newBalanceOrig = document.getElementById('newbalanceOrig');
+    const oldBalanceDest = document.getElementById('oldbalanceDest');
+    const newBalanceDest = document.getElementById('newbalanceDest');
+
+    function autoCalculate() {
+        const amount = parseFloat(amountInput.value) || 0;
+        const oldOrig = parseFloat(oldBalanceOrig.value) || 0;
+        const oldDest = parseFloat(oldBalanceDest.value) || 0;
+
+        if (amount > 0 && oldOrig > 0 && newBalanceOrig.value === '') {
+            newBalanceOrig.value = (oldOrig - amount).toFixed(2);
+        }
+
+        if (amount > 0 && oldDest >= 0 && newBalanceDest.value === '') {
+            newBalanceDest.value = (oldDest + amount).toFixed(2);
+        }
+    }
+
+    amountInput.addEventListener('blur', autoCalculate);
+    oldBalanceOrig.addEventListener('blur', autoCalculate);
+    oldBalanceDest.addEventListener('blur', autoCalculate);
+</script>
 </body>
 </html>

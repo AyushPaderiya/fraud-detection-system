@@ -4,10 +4,7 @@
 
 **End-to-End Machine Learning Pipeline for Real-Time Financial Fraud Detection**
 
-[Features](#-key-features) • [Demo](#-live-demo) • [Installation](#quick-start) • [Usage](#-usage-guide) • [Performance](#-model-performance) • [API](#-api-reference)
-
-<img src="https://via.placeholder.com/1200x400?text=Fraud+Detection+System" alt="Fraud Detection System Banner" width="800"/>
-
+[Features](#-key-features) • [Demo](#-live-demo) • [Installation](#installation) • [Usage](#-usage-guide) • [Performance](#-model-performance) • [API](#-api-reference)
 </div>
 
 ---
