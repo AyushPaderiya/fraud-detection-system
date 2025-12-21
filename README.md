@@ -20,7 +20,7 @@
 - [🚀 Quick Start](#quick-start)
 - [💡 Usage Guide](#-usage-guide)
 - [📈 Model Performance](#-model-performance)
-- [📸 Live Demo](#-live-demo)
+- [📸 Screenshots](#-screenshots)
 - [🔌 API Reference](#-api-reference)
 - [🐳 Docker Deployment](#-docker-deployment)
 - [🧪 Testing](#-testing)
