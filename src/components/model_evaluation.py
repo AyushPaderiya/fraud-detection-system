@@ -5,7 +5,7 @@ import sys
 import json
 import numpy as np
 import pandas as pd
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from sklearn.metrics import (
     confusion_matrix,
     classification_report,
@@ -22,14 +22,22 @@ from src.logger import logging
 from src.utils import load_object, calculate_business_metrics
 
 
+from src.utils import read_yaml_config
+
 @dataclass
 class ModelEvaluationConfig:
     """Configuration for model evaluation artifacts."""
 
-    evaluation_report_path: str = os.path.join("artifacts", "evaluation_report.json")
-    confusion_matrix_path: str = os.path.join("artifacts", "confusion_matrix.png")
-    roc_curve_path: str = os.path.join("artifacts", "roc_curve.png")
-    pr_curve_path: str = os.path.join("artifacts", "pr_curve.png")
+    config: dict = field(default_factory=lambda: read_yaml_config("config.yaml"))
+
+    def __post_init__(self):
+        artifacts_config = self.config['artifacts']['model_trainer'] # reuse trainer paths for report
+        # Note: I'll add specific evaluation paths to config.yaml in a moment if needed, 
+        # but let's stick to what's there or reasonable defaults based on config structure.
+        self.evaluation_report_path = artifacts_config['evaluation_report_path']
+        self.confusion_matrix_path = os.path.join("artifacts", "confusion_matrix.png")
+        self.roc_curve_path = os.path.join("artifacts", "roc_curve.png")
+        self.pr_curve_path = os.path.join("artifacts", "pr_curve.png")
 
 
 def _to_python(obj):

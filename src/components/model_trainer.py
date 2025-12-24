@@ -2,7 +2,7 @@
 import os
 import sys
 import numpy as np
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from sklearn.model_selection import StratifiedShuffleSplit
 from sklearn.linear_model import LogisticRegression
@@ -23,11 +23,17 @@ from src.logger import logging
 from src.utils import save_object
 
 
+from src.utils import read_yaml_config
+
 @dataclass
 class ModelTrainerConfig:
     """Configuration for model training artifacts."""
 
-    trained_model_file_path: str = os.path.join("artifacts", "model.pkl")
+    config = read_yaml_config("config.yaml") 
+    artifacts_config = config['artifacts']['model_trainer']
+    
+    trained_model_file_path: str = artifacts_config['model_path']
+    model_params: dict = field(default_factory=lambda: ModelTrainerConfig.config['model_params'])
 
 
 class ModelTrainer:
@@ -131,44 +137,14 @@ class ModelTrainer:
             logging.info(f"Scale pos weight: {scale_pos_weight:.2f}")
 
             # === Define Models (no hyperparameter tuning) ===
+            # === Define Models (from config) ===
+            model_params = self.model_trainer_config.model_params
+
             models = {
-                "Logistic Regression": LogisticRegression(
-                    max_iter=500,  # avoid convergence issues
-                    class_weight="balanced",
-                    random_state=42,
-                    solver="saga",  # good for large, sparse data
-                    n_jobs=-1,
-                    tol=1e-3,  # looser tolerance
-                ),
-                "Random Forest": RandomForestClassifier(
-                    n_estimators=100,
-                    max_depth=20,
-                    min_samples_split=20,
-                    min_samples_leaf=10,
-                    class_weight="balanced",
-                    random_state=42,
-                    n_jobs=-1,
-                    max_features="sqrt",
-                ),
-                "XGBoost": XGBClassifier(
-                    n_estimators=100,
-                    max_depth=7,
-                    learning_rate=0.1,
-                    scale_pos_weight=scale_pos_weight,
-                    random_state=42,
-                    n_jobs=-1,
-                    tree_method="hist",  # faster on large data
-                    eval_metric="aucpr",
-                ),
-                "LightGBM": LGBMClassifier(
-                    n_estimators=100,
-                    max_depth=7,
-                    learning_rate=0.1,
-                    scale_pos_weight=scale_pos_weight,
-                    random_state=42,
-                    n_jobs=-1,
-                    verbose=-1,
-                ),
+                "Logistic Regression": LogisticRegression(**model_params["LogisticRegression"]),
+                "Random Forest": RandomForestClassifier(**model_params["RandomForest"]),
+                "XGBoost": XGBClassifier(scale_pos_weight=scale_pos_weight, **model_params["XGBoost"]),
+                "LightGBM": LGBMClassifier(scale_pos_weight=scale_pos_weight, **model_params["LightGBM"]),
             }
 
             # === Train and evaluate all models ===

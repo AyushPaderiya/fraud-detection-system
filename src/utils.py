@@ -16,7 +16,30 @@ import joblib
 
 from src.exception import CustomException
 from src.logger import logging
+import yaml
+from pathlib import Path
 
+from src.exception import CustomException
+from src.logger import logging
+
+
+def read_yaml_config(file_path: str) -> dict:
+    """
+    Read YAML configuration file.
+
+    Args:
+        file_path (str): Path to yaml file
+
+    Returns:
+        dict: Configuration dictionary
+    """
+    try:
+        with open(file_path, "r") as f:
+            content = yaml.safe_load(f)
+            return content
+
+    except Exception as e:
+        raise CustomException(e, sys)
 
 def save_object(file_path, obj):
     """

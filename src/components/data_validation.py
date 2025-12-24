@@ -2,17 +2,24 @@
 import os
 import sys
 import pandas as pd
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from src.exception import CustomException
 from src.logger import logging
 
 
+from src.utils import read_yaml_config
+
 @dataclass
 class DataValidationConfig:
     """Configuration for data validation."""
 
-    validation_report_path: str = os.path.join("artifacts", "validation_report.txt")
+    config: dict = field(default_factory=lambda: read_yaml_config("config.yaml"))
+
+    def __post_init__(self):
+        # We can add validation paths to config if we want, or use a default.
+        # Let's add it to config.yaml if it's not there.
+        self.validation_report_path = os.path.join("artifacts", "validation_report.txt")
 
 
 class DataValidation:

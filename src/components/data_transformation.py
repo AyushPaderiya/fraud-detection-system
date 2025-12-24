@@ -2,7 +2,7 @@ import os
 import sys
 import numpy as np
 import pandas as pd
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.pipeline import Pipeline
@@ -13,11 +13,17 @@ from src.logger import logging
 from src.utils import save_object
 
 
+from src.utils import read_yaml_config
+
 @dataclass
 class DataTransformationConfig:
     """Configuration for data transformation artifacts."""
-
-    preprocessor_obj_file_path: str = os.path.join("artifacts", "preprocessor.pkl")
+    
+    config: dict = field(default_factory=lambda: read_yaml_config("config.yaml"))
+    
+    def __post_init__(self):
+        artifacts_config = self.config['artifacts']['data_transformation']
+        self.preprocessor_obj_file_path = artifacts_config['preprocessor_path']
 
 
 class FeatureEngineer(BaseEstimator, TransformerMixin):

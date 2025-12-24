@@ -3,19 +3,24 @@ import os
 import sys
 import numpy as np
 import pandas as pd
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from src.exception import CustomException
 from src.logger import logging
 from src.utils import load_object
 
 
+from src.utils import read_yaml_config
+
 @dataclass
 class PredictPipelineConfig:
     """Paths to model and preprocessor artifacts."""
+    
+    config: dict = field(default_factory=lambda: read_yaml_config("config.yaml"))
 
-    model_path: str = os.path.join("artifacts", "model.pkl")
-    preprocessor_path: str = os.path.join("artifacts", "preprocessor.pkl")
+    def __post_init__(self):
+        self.model_path = self.config['artifacts']['model_trainer']['model_path']
+        self.preprocessor_path = self.config['artifacts']['data_transformation']['preprocessor_path']
 
 
 class PredictPipeline:

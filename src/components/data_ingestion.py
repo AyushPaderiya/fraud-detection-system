@@ -3,20 +3,27 @@ import os
 import sys
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from src.exception import CustomException
 from src.logger import logging
 
 
+from src.utils import read_yaml_config
+
 @dataclass
 class DataIngestionConfig:
     """Configuration for data ingestion paths."""
-
-    raw_data_path: str = os.path.join("artifacts", "data", "raw_data.csv")
-    train_data_path: str = os.path.join("artifacts", "data", "train.csv")
-    val_data_path: str = os.path.join("artifacts", "data", "val.csv")
-    test_data_path: str = os.path.join("artifacts", "data", "test.csv")
+    
+    config: dict = field(default_factory=lambda: read_yaml_config("config.yaml"))
+    
+    def __post_init__(self):
+        artifacts_config = self.config['artifacts']['data_ingestion']
+        self.raw_data_path = artifacts_config['raw_data_path']
+        self.train_data_path = artifacts_config['train_data_path']
+        self.val_data_path = artifacts_config['val_data_path']
+        self.test_data_path = artifacts_config['test_data_path']
+        self.source_data_path = artifacts_config['source_data_path']
 
 
 class DataIngestion:
@@ -28,17 +35,19 @@ class DataIngestion:
     def __init__(self):
         self.ingestion_config = DataIngestionConfig()
 
-    def initiate_data_ingestion(self, data_path="notebook/data/paysim_fraud_data.csv"):
+    def initiate_data_ingestion(self, data_path=None):
         """
         Load raw data and split into train/val/test sets.
-
+        
         Args:
-            data_path (str): Path to raw CSV file
+            data_path (str, optional): Overrides config source path for testing.
 
         Returns:
             tuple: Paths to train, val, and test CSV files
         """
         logging.info("Entered data ingestion method")
+        if data_path is None:
+            data_path = self.ingestion_config.source_data_path
 
         try:
             # Read dataset

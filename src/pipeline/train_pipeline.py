@@ -17,12 +17,12 @@ class TrainingPipeline:
     def __init__(self):
         pass
 
-    def start_training(self, data_path="notebook/data/paysim_fraud_data.csv"):
+    def start_training(self, data_path=None):
         """
         Execute complete training pipeline.
 
         Args:
-            data_path: Path to raw dataset
+            data_path: Path to raw dataset (overrides config)
 
         Returns:
             dict: Training results and metrics
@@ -37,6 +37,7 @@ class TrainingPipeline:
             # ====================
             logging.info(">>> STEP 1: DATA INGESTION")
             data_ingestion = DataIngestion()
+            # If data_path is default or None, let initiate_data_ingestion use config
             train_path, val_path, test_path = data_ingestion.initiate_data_ingestion(data_path)
             logging.info("✅ Data ingestion completed\n")
 
@@ -77,8 +78,9 @@ class TrainingPipeline:
             # ====================
             logging.info(">>> STEP 5: MODEL EVALUATION")
             model_evaluator = ModelEvaluation()
+            # Use paths from config via components where possible
             evaluation_results = model_evaluator.initiate_model_evaluation(
-                model_path="artifacts/model.pkl",
+                model_path=model_trainer.model_trainer_config.trained_model_file_path,
                 preprocessor_path=preprocessor_path,
                 test_path=test_path,
             )
