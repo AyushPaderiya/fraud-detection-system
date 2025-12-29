@@ -75,9 +75,9 @@ A production-ready fraud detection system that leverages machine learning to ide
   - Logistic Regression
 
 - **⚖️ Imbalanced Data Handling:**
-  - Class weight optimization
-  - SMOTE (Synthetic Minority Oversampling)
+  - Class weight optimization (scale_pos_weight)
   - PR-AUC optimization (not accuracy)
+  - Threshold tuning for optimal precision-recall tradeoff
 
 - **📊 Business Impact Metrics** — ROI, cost-benefit analysis, fraud prevented vs. missed
 
@@ -157,9 +157,9 @@ fraud-detection-system/
 ├── 📓 notebook/                           # Jupyter notebooks for experimentation
 │   ├── data/
 │   │   └── paysim_fraud_data.csv         # Raw dataset (6.3M+ transactions)
-│   ├── 1_Paysim_EDA.ipynb                # Exploratory Data Analysis
-│   ├── 2_Feature_Engineering.ipynb       # Feature creation & validation
-│   └── 3_Model_Training.ipynb            # Model training & evaluation
+│   ├── 01_PaySim_EDA.ipynb               # Exploratory Data Analysis
+│   ├── 02_Feature_Engineering.ipynb      # Feature creation & validation
+│   └── 03_Model_Training_Evaluation_Improved.ipynb  # Model training & evaluation
 │
 ├── 🐍 src/                                # Source code
 │   ├── __init__.py
@@ -201,21 +201,21 @@ fraud-detection-system/
 │   └── predict.html                      # Transaction scanner
 │
 ├── 🧪 tests/                              # Unit tests
-│   ├── unit
+│   ├── conftest.py                       # pytest fixtures
+│   ├── unit/
+│   │   ├── test_core_logic.py            # Core logic tests
 │   │   ├── test_data_ingestion.py
 │   │   ├── test_data_transformation.py
 │   │   ├── test_model_trainer.py
 │   │   └── test_pipeline_components.py
-│   └── integration
+│   └── integration/
 │       └── test_pipeline.py
 │
-├── 📄 Configuration files
-│   ├── .gitignore
-│   ├── requirements.txt                  # Python dependencies
-│   ├── setup.py                          # Package setup
-│   ├── Dockerfile                        # Docker image definition
-│   └── docker-compose.yml                # Multi-container setup
-│
+├── 📄 .gitignore
+├── 📋 requirements.txt                    # Python dependencies
+├── ⚙️ setup.py                            # Package setup
+├── ⚙️ config.yaml                         # Configuration settings
+├── 🐳 Dockerfile                          # Docker image definition
 ├── 🚀 application.py                      # Flask web server
 ├── 📜 LICENSE
 └── 📖 README.md
@@ -719,10 +719,15 @@ Open `htmlcov/index.html` in browser to view detailed coverage.
 
 ```
 tests/
-├── test_data_ingestion.py       # Test data loading & splitting
-├── test_data_transformation.py  # Test feature engineering
-├── test_model_trainer.py        # Test model training
-└── test_predict_pipeline.py     # Test prediction pipeline
+├── conftest.py                  # pytest fixtures
+├── unit/
+│   ├── test_core_logic.py       # Core logic tests
+│   ├── test_data_ingestion.py   # Test data loading & splitting
+│   ├── test_data_transformation.py  # Test feature engineering
+│   ├── test_model_trainer.py    # Test model training
+│   └── test_pipeline_components.py  # Test pipeline components
+└── integration/
+    └── test_pipeline.py         # Full pipeline integration tests
 ```
 
 ---
