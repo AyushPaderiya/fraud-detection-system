@@ -19,7 +19,7 @@ def get_requirements(file_path: str) -> List[str]:
 
     return requirements
 
-
+# Setup function
 setup(
     name="fraud_detection",
     version="0.0.1",

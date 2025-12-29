@@ -785,9 +785,9 @@
                         <button type="submit" class="btn-primary">
                             🔍 Check Transaction Security
                         </button>
-                        <a href="/" class="btn-ghost">
-                            Cancel
-                        </a>
+                        <button type="button" class="btn-ghost" onclick="clearForm()">
+                            🗑️ Clear Form
+                        </button>
                     </div>
                 </form>
             </div>
@@ -903,6 +903,23 @@
         document.getElementById('isFlaggedFraud').value = '0';
     }
 
+    function clearForm() {
+        // Reset all form fields to empty/default values
+        document.getElementById('type').value = 'TRANSFER';
+        document.getElementById('amount').value = '';
+        document.getElementById('nameOrig').value = '';
+        document.getElementById('oldbalanceOrg').value = '';
+        document.getElementById('newbalanceOrig').value = '';
+        document.getElementById('nameDest').value = '';
+        document.getElementById('oldbalanceDest').value = '';
+        document.getElementById('newbalanceDest').value = '';
+        document.getElementById('step').value = '';
+        document.getElementById('isFlaggedFraud').value = '0';
+        
+        // Reload page to clear results panel as well
+        window.location.href = '/predict';
+    }
+
     // Auto-calculate balances to help users
     const amountInput = document.getElementById('amount');
     const oldBalanceOrig = document.getElementById('oldbalanceOrg');
@@ -910,23 +927,27 @@
     const oldBalanceDest = document.getElementById('oldbalanceDest');
     const newBalanceDest = document.getElementById('newbalanceDest');
 
-    function autoCalculate() {
+    function calculateBalances() {
         const amount = parseFloat(amountInput.value) || 0;
         const oldOrig = parseFloat(oldBalanceOrig.value) || 0;
         const oldDest = parseFloat(oldBalanceDest.value) || 0;
 
-        if (amount > 0 && oldOrig > 0 && newBalanceOrig.value === '') {
-            newBalanceOrig.value = (oldOrig - amount).toFixed(2);
+        // Auto-calculate Your Balance (After) = Your Balance (Before) - Amount
+        if (amount > 0 && oldOrig > 0) {
+            const newOrig = Math.max(0, oldOrig - amount);
+            newBalanceOrig.value = newOrig.toFixed(2);
         }
 
-        if (amount > 0 && oldDest >= 0 && newBalanceDest.value === '') {
+        // Auto-calculate Recipient Balance (After) = Recipient Balance (Before) + Amount
+        if (amount > 0 && oldDest >= 0) {
             newBalanceDest.value = (oldDest + amount).toFixed(2);
         }
     }
 
-    amountInput.addEventListener('blur', autoCalculate);
-    oldBalanceOrig.addEventListener('blur', autoCalculate);
-    oldBalanceDest.addEventListener('blur', autoCalculate);
+    // Listen for input changes in real-time
+    amountInput.addEventListener('input', calculateBalances);
+    oldBalanceOrig.addEventListener('input', calculateBalances);
+    oldBalanceDest.addEventListener('input', calculateBalances);
 </script>
 </body>
 </html>
