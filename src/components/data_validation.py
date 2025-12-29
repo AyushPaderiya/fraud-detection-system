@@ -1,4 +1,3 @@
-# src/components/data_validation.py
 import os
 import sys
 import pandas as pd
@@ -6,7 +5,6 @@ from dataclasses import dataclass, field
 
 from src.exception import CustomException
 from src.logger import logging
-
 
 from src.utils import read_yaml_config
 

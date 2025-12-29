@@ -1,7 +1,4 @@
-# src/pipeline/predict_pipeline.py
-import os
 import sys
-import numpy as np
 import pandas as pd
 from dataclasses import dataclass, field
 

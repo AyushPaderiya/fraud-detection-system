@@ -1,5 +1,3 @@
-# src/components/model_trainer.py
-import os
 import sys
 import numpy as np
 from dataclasses import dataclass, field
@@ -136,7 +134,6 @@ class ModelTrainer:
             )
             logging.info(f"Scale pos weight: {scale_pos_weight:.2f}")
 
-            # === Define Models (no hyperparameter tuning) ===
             # === Define Models (from config) ===
             model_params = self.model_trainer_config.model_params
 

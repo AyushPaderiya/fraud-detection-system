@@ -1,5 +1,3 @@
-# src/components/model_evaluation.py
-
 import os
 import sys
 import json
@@ -8,7 +6,6 @@ import pandas as pd
 from dataclasses import dataclass, field
 from sklearn.metrics import (
     confusion_matrix,
-    classification_report,
     roc_auc_score,
     average_precision_score,
     precision_recall_curve,

@@ -1,4 +1,3 @@
-import os
 import sys
 import numpy as np
 import pandas as pd
@@ -138,9 +137,6 @@ class DataTransformation:
         try:
             logging.info("Creating data transformation pipeline")
 
-            # Features to drop (identifiers and target)
-            drop_features = ["nameOrig", "nameDest", "isFlaggedFraud"]
-
             # Categorical feature (will be one-hot encoded)
             categorical_features = ["type"]
 
@@ -189,8 +185,10 @@ class DataTransformation:
                     ("num", numerical_pipeline, numerical_features),
                     ("cat", categorical_pipeline, categorical_features),
                 ],
-                remainder="drop",  # Drop columns not in numerical or categorical
+                remainder="drop",
             )
+            # These columns will be dropped via remainder='drop' in ColumnTransformer
+            # drop_features = ["nameOrig", "nameDest", "isFlaggedFraud"]
 
             logging.info("Data transformation pipeline created successfully")
             logging.info(f"Numerical features: {len(numerical_features)}")

@@ -1,8 +1,8 @@
 import os
 import sys
 import pickle
-import numpy as np
-import pandas as pd
+import yaml
+
 from sklearn.metrics import (
     roc_auc_score,
     average_precision_score,
@@ -12,12 +12,6 @@ from sklearn.metrics import (
     confusion_matrix,
 )
 from sklearn.model_selection import RandomizedSearchCV
-import joblib
-
-from src.exception import CustomException
-from src.logger import logging
-import yaml
-from pathlib import Path
 
 from src.exception import CustomException
 from src.logger import logging
