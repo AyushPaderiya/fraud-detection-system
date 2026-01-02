@@ -214,3 +214,7 @@ artifacts/data/*.npy
 # Keep structure
 !artifacts/.gitkeep
 !artifacts/data/.gitkeep
+
+# Azure
+.azure/
+*.publish.xml
