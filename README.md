@@ -213,6 +213,9 @@ fraud-detection-system/
 │   └── integration/
 │       └── test_pipeline.py
 │
+├── 📊 dashboard/                          # Tableau dashboard
+│   └── Fraud_Operations_Dashboard.twbx   # Executive fraud monitoring dashboard
+│
 ├── 📄 .gitignore
 ├── 📋 requirements.txt                    # Python dependencies
 ├── ⚙️ setup.py                            # Package setup
@@ -541,6 +544,14 @@ Example of a high-risk transaction flagged as fraudulent.
 ### 📊 Tableau Dashboard
 
 Executive-level Fraud Risk Operations Command Center built in Tableau for real-time monitoring and business intelligence.
+
+**Features:**
+- KPI tiles: Detection Rate, Fraud Exposure, Model Precision, False Positive Rate
+- 30-day trend analysis with fraud detection patterns
+- Hour-of-day heatmap revealing off-peak fraud concentration
+- Interactive filters: Date Range, Transaction Type, Risk Tier
+
+**Dashboard File:** `dashboard/Fraud_Operations_Dashboard.twbx`
 
 ![Tableau Dashboard](assets/Dashboard.png)
 
