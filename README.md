@@ -538,6 +538,12 @@ Example of a high-risk transaction flagged as fraudulent.
 
 ![Fraud Detection Alert](assets/fraud_alert.png)
 
+### 📊 Tableau Dashboard
+
+Executive-level Fraud Risk Operations Command Center built in Tableau for real-time monitoring and business intelligence.
+
+![Tableau Dashboard](assets/Dashboard.png)
+
 ---
 
 ## 🔌 API Reference
