@@ -19,8 +19,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # 6. Copy the entire project into the image
 COPY . .
 
-# 6. Expose Flask port
-EXPOSE 5000
+# 6. Expose port (Render uses 10000)
+EXPOSE 10000
 
 # 7. Default command: run Flask app with gunicorn for production
-CMD ["python", "-m", "gunicorn", "--bind=0.0.0.0:5000", "--workers=2", "--timeout=120", "application:app"]
+CMD ["python", "-m", "gunicorn", "--bind=0.0.0.0:10000", "--workers=2", "--timeout=120", "application:app"]
