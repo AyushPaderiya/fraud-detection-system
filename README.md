@@ -4,8 +4,6 @@
 
 **End-to-End Machine Learning Pipeline for Real-Time Financial Fraud Detection**
 
-### 🚀 [**View Live Demo**](https://fraud-detect-ayush.azurewebsites.net)
-
 [Features](#-key-features) • [Installation](#installation) • [Usage](#-usage-guide) • [Performance](#-model-performance) • [API](#-api-reference)
 </div>
 
