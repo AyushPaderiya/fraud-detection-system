@@ -4,10 +4,11 @@
 
 **End-to-End Machine Learning Pipeline for Real-Time Financial Fraud Detection**
 
-[Features](#-key-features) • [Installation](#installation) • [Usage](#-usage-guide) • [Performance](#-model-performance) • [API](#-api-reference)
+[Live App](https://fraud-detection-system-73mm.onrender.com) • [Features](#-key-features) • [Installation](#installation) • [Usage](#-usage-guide) • [Performance](#-model-performance) • [API](#-api-reference)
 </div>
 
 ---
+
 
 ## 📋 Table of Contents
 
@@ -654,31 +655,35 @@ docker run -d \
 
 **Access:** [http://localhost:5000](http://localhost:5000)
 
-### Docker Compose
+### CI/CD Pipeline (Render)
 
-**docker-compose.yml:**
+This project uses **GitHub Actions** for continuous integration and deployment to **Render**.
 
-```yaml
-version: '3.8'
-services:
-  web:
-    build: .
-    ports:
-      - "5000:5000"
-    volumes:
-      - ./artifacts:/app/artifacts
-      - ./logs:/app/logs
-    environment:
-      - FLASK_ENV=production
-      - MODEL_PATH=/app/artifacts/model.pkl
-    restart: unless-stopped
-```
+#### How it works:
+1. **Push/PR to `main`**: Triggers the `.github/workflows/deploy.yml` workflow.
+2. **Setup & Test Job**: The GitHub Action provisions an Ubuntu runner, sets up Python 3.11, installs requirements, and runs the `pytest` suite.
+3. **Deploy Job**: If the tests pass and the event is a `push` to `main`, the workflow executes a `curl` POST request to a Render **Deploy Hook URL**.
+4. **Render Build**: Render receives the webhook, pulls the latest code from GitHub, and automatically builds and deploys the new Docker image on port 10000.
 
-**Run with Docker Compose:**
+#### How to test the pipeline locally and on GitHub:
 
+**1. Run tests locally first:**
 ```bash
-docker-compose up -d
+pytest tests/ -v
 ```
+
+**2. Trigger the deployment:**
+Make a small change (like updating a comment), commit it, and push to the `main` branch:
+```bash
+git add .
+git commit -m "chore: test CI/CD pipeline"
+git push origin main
+```
+
+**3. Monitor the progress:**
+- **GitHub:** Go to the **Actions** tab in your repository. You should see the `Test and Deploy to Render` workflow running. Wait for the `test` and `deploy` jobs to complete successfully.
+- **Render:** Once GitHub Actions triggers the webhook, go to your Render Dashboard. You will see a new build process starting.
+- **Verification:** Once the Render dashboard says "Deploy succeeded", navigate to [https://fraud-detection-system-73mm.onrender.com](https://fraud-detection-system-73mm.onrender.com) to see your live changes!
 
 ### Dockerfile
 
